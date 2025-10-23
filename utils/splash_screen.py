@@ -4,10 +4,8 @@ from controller.controller_fornecedor import ControllerFornecedor
 from controller.controller_compra import ControllerCompra
 
 def exibir_splash_screen():
-    """
-    Exibe a tela de abertura do sistema, como pedido no edital.
-    """
-    # Instanciamos os controllers para buscar as contagens
+    # Exibe a tela de abertura do sistema.
+    
     ctrl_produto = ControllerProduto()
     ctrl_fornecedor = ControllerFornecedor()
     ctrl_compra = ControllerCompra()
@@ -19,16 +17,17 @@ def exibir_splash_screen():
     print("#                                            #")
     print("##############################################")
     print("\nCRIADO POR:")
-    print(" - Adriano Ferraz Guimarães")       # PREENCHA COM SEU NOME
-    print(" - Ricardo Vasconcellos")  # PREENCHA COM O NOME DO GRUPO
+    print(" - Adriano Ferraz Guimarães")
+    print(" - Filippo Salles Morais")
+    print(" - Mário Márcio Holsbach")
+    print(" - Ricardo Vasconcellos Drumond")
     
-    print("\nDISCIPLINA: BANCO DE DADOS") # [cite: 31]
-    print("PROFESSOR: HOWARD ROATTI")     # [cite: 3, 31]
+    print("\nDISCIPLINA: BANCO DE DADOS")
+    print("PROFESSOR: HOWARD ROATTI")
     
     print("\n----------------------------------------------")
     print("TOTAL DE REGISTROS EXISTENTES:")
     
-    # Busca a contagem das 3 tabelas 
     print(f" 1 - FORNECEDORES: {ctrl_fornecedor.get_contagem_fornecedores()}")
     print(f" 2 - PRODUTOS:     {ctrl_produto.get_contagem_produtos()}")
     print(f" 3 - COMPRAS:      {ctrl_compra.get_contagem_compras()}")

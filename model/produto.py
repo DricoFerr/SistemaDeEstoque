@@ -13,11 +13,8 @@ class Produto:
         self.quantidade_estoque = quantidade_estoque
         self.estoque_minimo = estoque_minimo
         self.fornecedor_id = fornecedor_id
-        
-        # O edital [cite: 153] sugere que aqui deveria ter um objeto Fornecedor.
-        # Vamos manter simples por enquanto e melhorar depois.
 
     def to_string(self):
-        """ Retorna uma string formatada do objeto, como pedido no edital [cite: 156] """
+        """Retorna uma string formatada do objeto"""
         return (f"ID: {self.produto_id}, Nome: {self.nome}, Preço: R${self.preco}, "
                 f"Qtd: {self.quantidade_estoque}")
