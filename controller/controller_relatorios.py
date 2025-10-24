@@ -13,7 +13,7 @@ class ControllerRelatorios:
             return []
 
         cursor = conn.cursor()
-        # Query para sumarizar (GROUP BY) as compras por fornecedor
+        # Query para sumarizar as compras por fornecedor
         query = """
            SELECT 
   f.nome AS fornecedor,
@@ -47,7 +47,7 @@ ORDER BY total_gasto DESC;
             return []
 
         cursor = conn.cursor()
-        # Query para juntar (JOIN) as tabelas de compras, produtos e fornecedores
+        # Query para juntar as tabelas de compras, produtos e fornecedores
         query = """
             SELECT 
                 c.compra_id,

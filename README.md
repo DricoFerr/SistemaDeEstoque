@@ -1,86 +1,189 @@
-# Sistema de Gestão de Estoque
+# 📦 Sistema de Gestão de Estoque
 
 ## 📖 Descrição
-Este é um sistema de linha de comando (CLI) para gestão de estoque, desenvolvido como projeto para a disciplina de Banco de Dados. A aplicação permite o controle completo de produtos, fornecedores e compras, utilizando uma arquitetura organizada em camadas (Model-Controller-View) para separar as responsabilidades.
+Sistema profissional de gestão de estoque desenvolvido em Python, utilizando arquitetura MVC (Model-View-Controller) e banco de dados MySQL. Oferece controle completo de produtos, fornecedores e compras através de uma interface de linha de comando (CLI) intuitiva e eficiente.
 
----
+## ✨ Funcionalidades
 
-## ✨ Funcionalidades Principais
-- **Gestão de Produtos:**
-  - Adicionar novos produtos.
-  - Listar todos os produtos cadastrados.
-  - Atualizar informações de um produto.
-  - Remover produtos (com validação para impedir a exclusão de itens associados a compras).
+### 📊 Dashboard e Controle
+- Visão geral do estoque com totais e valores em tempo real
+- Monitoramento de produtos com estoque baixo
+- Acompanhamento de valor total do estoque
+- Contadores de registros atualizados em tempo real
 
-- **Gestão de Fornecedores:**
-  - Adicionar novos fornecedores.
-  - Listar, atualizar e remover fornecedores existentes.
+### 🏭 Gestão de Produtos
+- Cadastro e manutenção de produtos
+- Controle de estoque mínimo
+- Atualização automática após compras
+- Proteção contra exclusão de produtos vinculados
 
-- **Registro de Compras:**
-  - Registrar novas compras de produtos.
-  - Atualização automática do estoque do produto após cada compra registrada.
+### 👥 Gestão de Fornecedores
+- Cadastro completo de fornecedores
+- Vinculação com produtos
+- Dados de contato e endereço
+- Controle de relacionamento produto-fornecedor
 
-- **Relatórios:**
-  - **Sumarização:** Exibe o total de compras e o valor gasto, agrupados por fornecedor.
-  - **Junção:** Mostra um relatório detalhado de todas as compras, com informações do produto e do fornecedor.
-  - **Estoque Baixo:** Lista todos os produtos que precisam de reposição (quantidade atual abaixo do estoque mínimo).
+### 🛍️ Registro de Compras
+- Entrada de mercadorias
+- Atualização automática do estoque
+- Cálculo automático de valores
+- Histórico completo de transações
 
-- **Interface de Usuário:**
-  - Tela de abertura (*Splash Screen*) com um resumo dos registros no banco de dados.
-  - Menus interativos e de fácil navegação para acessar todas as funcionalidades.
+### 📈 Relatórios
+- **Sumarização por Fornecedor:** Total de compras e valores
+- **Relatório Detalhado:** Histórico completo de operações
+- **Estoque Crítico:** Produtos que necessitam reposição
 
----
+## 🛠️ Requisitos do Sistema
 
-## 🛠️ Tecnologias Utilizadas
-- **Linguagem:** Python 3
-- **Banco de Dados:** MySQL
-- **Biblioteca de Conexão:** `mysql-connector-python`
+### Windows
+1. **Python 3.8+**
+   ```powershell
+   # Verificar se já está instalado
+   python --version
+   
+   # Se não estiver instalado, baixe do site oficial:
+   # https://www.python.org/downloads/windows/
+   ```
 
----
+2. **MySQL 8.0+**
+   ```powershell
+   # Download do MySQL Installer:
+   # https://dev.mysql.com/downloads/installer/
+   
+   # Após instalação, verificar serviço:
+   Get-Service -Name "MySQL*"
+   ```
 
-## 🚀 Como Executar o Projeto
+3. **Dependências Python**
+   ```powershell
+   # Instalar gerenciador de pacotes
+   python -m pip install --upgrade pip
+   
+   # Instalar conector MySQL
+   pip install mysql-connector-python
+   ```
 
-### Pré-requisitos
-- Python 3.x instalado.
-- Servidor MySQL em execução.
-- A biblioteca `mysql-connector-python`.
+### Linux (Ubuntu/Debian)
+1. **Python 3.8+**
+   ```bash
+   # Atualizar repositórios
+   sudo apt update
+   
+   # Instalar Python
+   sudo apt install python3 python3-pip
+   ```
 
-### 1. Instalação
-Clone o repositório para sua máquina local:
-```bash
-git clone <URL_DO_REPOSITORIO>
-cd SistemaDeEstoque
+2. **MySQL 8.0+**
+   ```bash
+   # Instalar MySQL
+   sudo apt install mysql-server
+   
+   # Iniciar serviço
+   sudo systemctl start mysql
+   
+   # Habilitar início automático
+   sudo systemctl enable mysql
+   ```
+
+3. **Dependências Python**
+   ```bash
+   # Atualizar pip
+   python3 -m pip install --upgrade pip
+   
+   # Instalar conector MySQL
+   pip3 install mysql-connector-python
+   ```
+
+## 🚀 Instalação e Configuração
+
+1. **Clonar o Repositório**
+   ```bash
+   git clone https://github.com/DricoFerr/SistemaDeEstoque.git
+   cd SistemaDeEstoque
+   ```
+
+2. **Configurar Banco de Dados**
+   ```bash
+   # Windows (PowerShell como Administrador)
+   mysql -u root -p < estoque.sql
+   
+   # Linux
+   sudo mysql -u root -p < estoque.sql
+   ```
+
+3. **Configurar Conexão**
+   - Abrir `conexion.py`
+   - Ajustar credenciais:
+     ```python
+     host="localhost"
+     user="seu_usuario"
+     password="sua_senha"
+     database="estoque"
+     ```
+
+4. **Executar o Sistema**
+   ```bash
+   # Windows
+   python main.py
+   
+   # Linux
+   python3 main.py
+   ```
+
+## 🎯 Guia Rápido de Uso
+
+1. **Primeiro Acesso**
+   - Execute o sistema
+   - Observe o splash screen com totais
+   - Use o menu principal para navegação
+
+2. **Cadastros Básicos**
+   - Comece cadastrando fornecedores
+   - Depois cadastre os produtos
+   - Vincule produtos aos fornecedores
+
+3. **Operações Diárias**
+   - Registre compras
+   - Monitore o estoque
+   - Consulte relatórios
+
+4. **Manutenção**
+   - Atualize cadastros quando necessário
+   - Monitore produtos com estoque baixo
+   - Faça backup do banco regularmente
+
+## 📂 Estrutura do Projeto
+```
+SistemaDeEstoque/
+├── controller/           # Lógica de negócios
+├── model/               # Entidades do sistema
+├── utils/               # Utilitários e interface
+├── conexion.py          # Conexão com banco
+├── main.py             # Ponto de entrada
+├── estoque.sql         # Script do banco
+└── README.md           # Documentação
 ```
 
-Instale a dependência necessária:
-```bash
-pip install mysql-connector-python
-```
+## 👥 Equipe de Desenvolvimento
+- **Adriano Ferraz Guimarães**
+  - Desenvolvedor Principal
+  - Arquitetura do Sistema
 
-### 2. Configuração do Banco de Dados
-1. Crie um banco de dados no seu servidor MySQL com o nome `estoque`.
-2. Execute o script `estoque.sql` para criar as tabelas e popular os dados iniciais.
-3. Abra o arquivo `conexion.py` e atualize as credenciais de conexão com o seu banco de dados (usuário, senha, host).
+- **Filippo Salles Morais**
+  - Desenvolvimento de Interface
+  - Documentação
 
-### 3. Execução
-Para iniciar o sistema, execute o arquivo `main.py` a partir do diretório raiz do projeto. O comando é o mesmo para Windows, macOS e Linux:
-```bash
-python3 main.py
-```
+- **Mário Márcio Holsbach**
+  - Modelagem de Dados
+  - Testes do Sistema
 
----
+- **Ricardo Vasconcellos Drumond**
+  - Implementação de Relatórios
+  - Controle de Qualidade
 
-## 📁 Estrutura do Projeto
-O projeto segue uma arquitetura que separa as responsabilidades em diferentes pastas:
-- `model/`: Contém as classes que representam as entidades do banco de dados (`Produto`, `Fornecedor`, `Compra`).
-- `controller/`: Responsável pela lógica de negócio e pela comunicação entre os menus e o banco de dados.
-- `utils/`: Contém os módulos de interface com o usuário (`menus.py`), tela de abertura (`splash_screen.py`) e funções auxiliares (`helpers.py`).
-- `main.py`: Ponto de entrada da aplicação.
-- `conexion.py`: Gerencia a conexão com o banco de dados MySQL.
-- `estoque.sql`: Script para criação e população do banco de dados.
+## 📄 Licença
+Este projeto é para fins educacionais, desenvolvido para a disciplina de Banco de Dados.
 
 ---
-
-## 👨‍💻 Autores
-- Adriano Ferraz Guimarães
-- Ricardo Vasconcellos 
+*Desenvolvido com ❤️ pela equipe de Sistemas de Informação - 2025* 
