@@ -133,7 +133,6 @@ class ControllerProduto:
         cursor = conn.cursor()
         
         try:
-            # Requisito 6.c.5.i: Verifica se o registro é uma FK em outra tabela
             query_check_fk = "SELECT COUNT(1) FROM compras WHERE produto_id = %s"
             cursor.execute(query_check_fk, (produto_id,))
             resultado = cursor.fetchone()
@@ -143,7 +142,6 @@ class ControllerProduto:
                       f"pois já está associado a {resultado[0]} compra(s).")
                 return False
 
-            # Se a verificação passar, remove o produto
             query_delete = "DELETE FROM produtos WHERE produto_id = %s"
             cursor.execute(query_delete, (produto_id,))
             conn.commit()
@@ -164,18 +162,12 @@ class ControllerProduto:
             conn.close()
 
     def atualizar_produto(self, produto: Produto):
-        """
-        Atualiza um produto no banco de dados usando seu 'produto_id'.
-        O objeto 'produto' deve conter o 'produto_id' do registro a ser atualizado.
-        Retorna True se atualizado, False se houver erro.
-        """
         conn = get_db_connection()
         if conn is None:
             return False
 
         cursor = conn.cursor()
         
-        # Requisito 6.d.6: Realiza a atualização da tupla
         query = """UPDATE produtos SET 
                        nome = %s, 
                        descricao = %s, 

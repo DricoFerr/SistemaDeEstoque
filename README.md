@@ -167,23 +167,12 @@ SistemaDeEstoque/
 
 ## 👥 Equipe de Desenvolvimento
 - **Adriano Ferraz Guimarães**
-  - Desenvolvedor Principal
-  - Arquitetura do Sistema
 
 - **Filippo Salles Morais**
-  - Desenvolvimento de Interface
-  - Documentação
 
 - **Mário Márcio Holsbach**
-  - Modelagem de Dados
-  - Testes do Sistema
 
 - **Ricardo Vasconcellos Drumond**
-  - Implementação de Relatórios
-  - Controle de Qualidade
 
 ## 📄 Licença
 Este projeto é para fins educacionais, desenvolvido para a disciplina de Banco de Dados.
-
----
-*Desenvolvido com ❤️ pela equipe de Sistemas de Informação - 2025* 

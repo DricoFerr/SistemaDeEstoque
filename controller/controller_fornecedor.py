@@ -90,7 +90,6 @@ class ControllerFornecedor:
             return False
         cursor = conn.cursor()
         try:
-            # A restrição ON DELETE RESTRICT no banco já impede a exclusão.
             query_delete = "DELETE FROM Fornecedores WHERE fornecedor_id = %s"
             cursor.execute(query_delete, (fornecedor_id,))
             conn.commit()
@@ -101,7 +100,6 @@ class ControllerFornecedor:
                 print(f"\n[AVISO] Nenhum fornecedor com ID {fornecedor_id} foi encontrado.")
                 return False
         except Error as e:
-            # Captura o erro de violação de chave estrangeira (FK)
             if e.errno == 1451:
                 print(f"\n[ERRO] O fornecedor com ID {fornecedor_id} não pode ser excluído, "
                       f"pois está associado a produtos ou compras existentes.")
