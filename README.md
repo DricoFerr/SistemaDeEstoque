@@ -174,5 +174,5 @@ SistemaDeEstoque/
 
 - **Ricardo Vasconcellos Drumond**
 
-## 📄 Licença
-Este projeto é para fins educacionais, desenvolvido para a disciplina de Banco de Dados.
+## 📄 Link do video tutorial:
+https://youtu.be/az7zzplQha8
