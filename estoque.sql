@@ -28,6 +28,7 @@ CREATE TABLE Compras (
     produto_id INT NOT NULL,
     fornecedor_id INT NOT NULL,
     quantidade INT NOT NULL,
+    valor_total DECIMAL(10, 2) NOT NULL,
     data_compra DATETIME NOT NULL,
     CONSTRAINT fk_compra_produto
         FOREIGN KEY (produto_id)
@@ -63,8 +64,8 @@ VALUES
 ('Heineken Long neck', 'Garrada Heineken 320ml', 6.00, 231, 10, 2),
 ('Coca-cola 1L', 'Garrafa Coca-cola 1L', 9.00, 61, 10, 3),
 ('Coca-cola 2L', 'Garrafa Coca-cola 2L', 13.00, 48, 10, 3),
-('Campari', 'Garrafa de campari', 52.90, 60, 16, 4),
-('Aperol', 'Garrafa de aperol', 59.90, 25, 28, 4),
+('Campari', 'Garrafa de campari', 52.90, 60, 10, 4),
+('Aperol', 'Garrafa de aperol', 59.90, 25, 10, 4),
 ('Jack-Daniels original', 'Garrafa sabor original', 119.90, 55, 10, 5),
 ('Jack-Daniels apple', 'Garrafa sabor maca', 119.90, 77, 10, 5),
 ('Vinho San Martin', 'Vinho chileno', 89.90, 83, 10, 6),
@@ -82,13 +83,13 @@ VALUES
 ('Catucai 1L', 'Garrafa de catucai 1L', 15.90, 62, 10, 12),
 ('Catucai 500ml', 'Garrafa de catucai 500ml', 9.00, 55, 10, 12);
 
-INSERT INTO Compras (produto_id, fornecedor_id, quantidade, data_compra)
+INSERT INTO Compras (produto_id, fornecedor_id, quantidade, valor_total, data_compra)
 VALUES
-(1, 1, 60, '2025-10-15 10:30:28'),
-(4, 2, 25, '2025-10-16 14:45:46'),
-(6, 3, 20, '2025-10-17 09:20:57'),
-(9, 5, 15, '2025-10-18 16:10:31'),
-(12, 6, 30, '2025-10-18 16:37:32'),
-(18, 9, 50, '2025-10-20 14:45:29'),
-(23, 12, 25, '2025-10-20 14:52:54'),
-(14, 7, 10, '2025-10-21 13:17:21');
+(1, 1, 60, 390.00, '2025-10-15 10:30:28'),
+(4, 2, 25, 150.00, '2025-10-16 14:45:46'),
+(6, 3, 20, 260.00, '2025-10-17 09:20:57'),
+(9, 5, 15, 1798.50, '2025-10-18 16:10:31'),
+(12, 6, 30, 1797.00, '2025-10-18 16:37:32'),
+(18, 9, 50, 275.00, '2025-10-20 14:45:29'),
+(23, 12, 25, 397.50, '2025-10-20 14:52:54'),
+(14, 7, 10, 89.00, '2025-10-21 13:17:21');

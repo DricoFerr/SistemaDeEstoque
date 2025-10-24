@@ -113,6 +113,30 @@ class ControllerFornecedor:
             cursor.close()
             conn.close()
     
+    def get_fornecedor_por_id(self, fornecedor_id: int):
+        """
+        Busca um fornecedor específico pelo seu ID.
+        Retorna uma tupla com todos os dados do fornecedor se encontrado, caso contrário None.
+        """
+        conn = get_db_connection()
+        if conn is None:
+            return None
+
+        cursor = conn.cursor()
+        query = """SELECT fornecedor_id, nome, telefone, email, endereco 
+                   FROM Fornecedores WHERE fornecedor_id = %s"""
+        
+        try:
+            cursor.execute(query, (fornecedor_id,))
+            row = cursor.fetchone()
+            return row
+        except Error as e:
+            print(f"\n[ERRO] O erro '{e}' ocorreu ao buscar o fornecedor")
+            return None
+        finally:
+            cursor.close()
+            conn.close()
+
     def get_contagem_fornecedores(self):
         """Retorna a contagem de registros na tabela fornecedores."""
         conn = get_db_connection()

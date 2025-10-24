@@ -95,6 +95,31 @@ class ControllerProduto:
             cursor.close()
             conn.close()
 
+    def get_totais_estoque(self):
+        """Retorna a quantidade total de itens e o valor total do estoque."""
+        conn = get_db_connection()
+        if conn is None:
+            return (0, 0.0)
+
+        cursor = conn.cursor()
+        query = """
+            SELECT 
+                SUM(quantidade_estoque) as total_itens,
+                SUM(quantidade_estoque * preco) as valor_total
+            FROM produtos
+        """
+        
+        try:
+            cursor.execute(query)
+            result = cursor.fetchone()
+            return (result[0] or 0, result[1] or 0.0)  # Retorna 0 se for None
+        except Error as e:
+            print(f"\n[ERRO] Não foi possível calcular totais do estoque: {e}")
+            return (0, 0.0)
+        finally:
+            cursor.close()
+            conn.close()
+
     def remover_produto(self, produto_id: int):
         """
         Remove um produto do banco de dados, se não houver FKs (compras)
@@ -179,6 +204,56 @@ class ControllerProduto:
             print(f"\n[ERRO] O erro '{e}' ocorreu ao atualizar o produto")
             conn.rollback()
             return False
+        finally:
+            cursor.close()
+            conn.close()
+
+    def get_produto_completo_por_id(self, produto_id: int):
+        """
+        Busca um produto específico pelo seu ID com TODOS os campos.
+        Retorna uma tupla com os dados se encontrado, caso contrário None.
+        """
+        conn = get_db_connection()
+        if conn is None:
+            return None
+
+        cursor = conn.cursor()
+        # Query para retornar todos os campos necessários para o objeto Produto
+        query = """SELECT produto_id, nome, descricao, preco, 
+                          quantidade_estoque, estoque_minimo, fornecedor_id 
+                   FROM produtos WHERE produto_id = %s"""
+        
+        try:
+            cursor.execute(query, (produto_id,))
+            row = cursor.fetchone()
+            return row # Retorna a tupla com todos os dados do produto
+        except Error as e:
+            print(f"\n[ERRO] O erro '{e}' ocorreu ao buscar o produto completo")
+            return None
+        finally:
+            cursor.close()
+            conn.close()
+
+    def get_fornecedor_por_id(self, fornecedor_id: int):
+        """
+        Busca um fornecedor específico pelo seu ID com TODOS os campos.
+        Retorna uma tupla com os dados se encontrado, caso contrário None.
+        """
+        conn = get_db_connection()
+        if conn is None:
+            return None
+
+        cursor = conn.cursor()
+        query = """SELECT fornecedor_id, nome, telefone, email, endereco 
+                   FROM Fornecedores WHERE fornecedor_id = %s"""
+        
+        try:
+            cursor.execute(query, (fornecedor_id,))
+            row = cursor.fetchone()
+            return row # Retorna a tupla com todos os dados do fornecedor
+        except Error as e:
+            print(f"\n[ERRO] O erro '{e}' ocorreu ao buscar o fornecedor")
+            return None
         finally:
             cursor.close()
             conn.close()
