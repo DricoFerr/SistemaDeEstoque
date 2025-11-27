@@ -1,14 +1,14 @@
 # 📦 Sistema de Gestão de Estoque
 
 ## 📖 Descrição
-Sistema profissional de gestão de estoque desenvolvido em Python, utilizando arquitetura MVC (Model-View-Controller) e banco de dados MySQL. Oferece controle completo de produtos, fornecedores e compras através de uma interface de linha de comando (CLI) intuitiva e eficiente.
+Sistema profissional de gestão de estoque desenvolvido em Python, usando arquitetura MVC (Model-View-Controller). Este repositório foi migrado para usar MongoDB como banco de dados principal (coleções: `Fornecedores`, `Produtos`, `Compras`) — há também um utilitário para migrar dados de MySQL, caso você esteja atualizando de uma versão antiga.
 
 ## ✨ Funcionalidades
 
 ### 📊 Dashboard e Controle
 - Visão geral do estoque com totais e valores em tempo real
 - Monitoramento de produtos com estoque baixo
-- Acompanhamento de valor total do estoque
+- Acompanhamento do valor total do estoque
 - Contadores de registros atualizados em tempo real
 
 ### 🏭 Gestão de Produtos
@@ -21,7 +21,6 @@ Sistema profissional de gestão de estoque desenvolvido em Python, utilizando ar
 - Cadastro completo de fornecedores
 - Vinculação com produtos
 - Dados de contato e endereço
-- Controle de relacionamento produto-fornecedor
 
 ### 🛍️ Registro de Compras
 - Entrada de mercadorias
@@ -36,63 +35,49 @@ Sistema profissional de gestão de estoque desenvolvido em Python, utilizando ar
 
 ## 🛠️ Requisitos do Sistema
 
-### Windows
+### Requisitos Gerais
 1. **Python 3.8+**
+2. **MongoDB** (local ou em nuvem — MongoDB Atlas)
+3. **(Opcional) MySQL 8.0+** — apenas se você precisar migrar dados antigos
+4. **Pip** (gerenciador de pacotes Python)
+
+### Windows
+1. **Instalar Python 3.8+**
    ```powershell
-   # Verificar se já está instalado
    python --version
-   
-   # Se não estiver instalado, baixe do site oficial:
-   # https://www.python.org/downloads/windows/
+   # Se necessário: https://www.python.org/downloads/windows/
    ```
 
-2. **MySQL 8.0+**
-   ```powershell
-   # Download do MySQL Installer:
-   # https://dev.mysql.com/downloads/installer/
-   
-   # Após instalação, verificar serviço:
-   Get-Service -Name "MySQL*"
-   ```
+2. **Instalar MongoDB** (Community Server ou usar Atlas):
+   - Para local: baixe o instalador em https://www.mongodb.com/try/download/community e siga as instruções.
+   - Ou opte por MongoDB Atlas e crie um cluster gratuito.
 
 3. **Dependências Python**
    ```powershell
-   # Instalar gerenciador de pacotes
    python -m pip install --upgrade pip
-   
-   # Instalar conector MySQL
-   pip install mysql-connector-python
+   pip install pymongo mysql-connector-python python-dotenv
    ```
 
 ### Linux (Ubuntu/Debian)
 1. **Python 3.8+**
    ```bash
-   # Atualizar repositórios
    sudo apt update
-   
-   # Instalar Python
-   sudo apt install python3 python3-pip
+   sudo apt install python3 python3-pip -y
    ```
 
-2. **MySQL 8.0+**
+2. **MongoDB**
    ```bash
-   # Instalar MySQL
-   sudo apt install mysql-server
-   
-   # Iniciar serviço
-   sudo systemctl start mysql
-   
-   # Habilitar início automático
-   sudo systemctl enable mysql
+   # Usando pacotes oficiais do Ubuntu/Debian
+   sudo apt install -y mongodb
+   sudo systemctl start mongodb
+   sudo systemctl enable mongodb
+   sudo systemctl status mongodb
    ```
 
 3. **Dependências Python**
    ```bash
-   # Atualizar pip
    python3 -m pip install --upgrade pip
-   
-   # Instalar conector MySQL
-   pip3 install mysql-connector-python
+   pip3 install pymongo mysql-connector-python python-dotenv
    ```
 
 ## 🚀 Instalação e Configuração
@@ -103,76 +88,89 @@ Sistema profissional de gestão de estoque desenvolvido em Python, utilizando ar
    cd SistemaDeEstoque
    ```
 
-2. **Configurar Banco de Dados**
-   ```bash
-   # Windows (PowerShell como Administrador)
-   mysql -u root -p < estoque.sql
-   
-   # Linux
-   sudo mysql -u root -p < estoque.sql
-   ```
+2. **Popular / Inicializar o MongoDB**
+   - O repositório contém `init_mongo.js` com dados de exemplo. Para importar o arquivo no MongoDB local (ou em um shell remoto), rode:
+     ```bash
+     # Usando mongosh (recomendado):
+     mongosh --file init_mongo.js
+     ```
+   - Se estiver usando Atlas, valide a string de conexão e importe via mongosh apontando para o cluster.
 
-3. **Configurar Conexão**
-   - Abrir `conexion.py`
-   - Ajustar credenciais:
-     ```python
-     host="localhost"
-     user="seu_usuario"
-     password="sua_senha"
-     database="estoque"
+3. **Executar Migração (opcional — MySQL -> MongoDB)**
+   - Se você já possui dados em MySQL, use `migracao.py` para migrar tabelas `fornecedores` e `produtos` para o MongoDB.
+   - Configure as credenciais MySQL dentro do `migracao.py` ou em um `.env` (caso use `python-dotenv`), depois execute:
+     ```bash
+     python migracao.py
      ```
 
-4. **Executar o Sistema**
+4. **Configurar Conexão**
+   - O arquivo `conexion.py` conecta-se por padrão em `mongodb://localhost:27017/` e usa a database `estoque`.
+   - Para usar outro endereço (por exemplo Atlas): abra `conexion.py` e altere a string de conexão.
+
+5. **Executar o Sistema (CLI)**
    ```bash
    # Windows
    python main.py
-   
+
    # Linux
    python3 main.py
    ```
 
+## 🧰 Dependências (Python)
+- pymongo — driver MongoDB
+- mysql-connector-python — somente necessário para `migracao.py` (caso migre do MySQL)
+- python-dotenv — opcional, para configuração via `.env`
+
+Instale todas com:
+```bash
+# Windows
+python -m pip install --upgrade pip
+pip install pymongo mysql-connector-python python-dotenv
+
+# Linux
+python3 -m pip install --upgrade pip
+pip3 install pymongo mysql-connector-python python-dotenv
+```
+
 ## 🎯 Guia Rápido de Uso
 
 1. **Primeiro Acesso**
-   - Execute o sistema
+   - Execute o sistema com `python main.py`
    - Observe o splash screen com totais
-   - Use o menu principal para navegação
+   - Navegue pelo menu CLI
 
-2. **Cadastros Básicos**
-   - Comece cadastrando fornecedores
-   - Depois cadastre os produtos
-   - Vincule produtos aos fornecedores
+2. **Iniciar Cadastros**
+   - Controles recomendados: cadastrar primeiro fornecedores, depois produtos e então registrar compras.
 
-3. **Operações Diárias**
-   - Registre compras
-   - Monitore o estoque
-   - Consulte relatórios
-
-4. **Manutenção**
-   - Atualize cadastros quando necessário
-   - Monitore produtos com estoque baixo
-   - Faça backup do banco regularmente
+3. **Gerenciar Estoque**
+   - Use os relatórios e o dashboard para monitorar produtos abaixo do estoque mínimo e gerar pedidos de reposição.
 
 ## 📂 Estrutura do Projeto
 ```
 SistemaDeEstoque/
-├── controller/           # Lógica de negócios
-├── model/               # Entidades do sistema
-├── utils/               # Utilitários e interface
-├── conexion.py          # Conexão com banco
-├── main.py             # Ponto de entrada
-├── estoque.sql         # Script do banco
-└── README.md           # Documentação
+├── controller/           # Lógica de negócios (Controllers)
+├── model/                # Entidades do sistema
+├── utils/                # Utilidades e interface (CLI)
+├── init_mongo.js         # Script para popular o MongoDB com dados de exemplo
+├── conexion.py           # Conexão com MongoDB
+├── migracao.py           # Script opcional para migrar MySQL -> MongoDB
+├── main.py               # Ponto de entrada do CLI
+├── estoque.sql           # Script SQL (MySQL) usado apenas para referência / migração
+└── README.md
 ```
+
+## 💡 Dicas e Observações
+- Se estiver usando MongoDB Atlas, atualize a string de conexão em `conexion.py`.
+- Para testes locais, `mongosh --file init_mongo.js` popula o banco com dados de amostra (Fornecedores, Produtos, Compras).
+- Utilize `migracao.py` apenas uma vez, pois ele limpa as coleções antes de inserir — tome backup do seu banco caso necessário.
+- Se ocorrerem erros de conexão, valide se o serviço do MongoDB está em execução e a porta 27017 está aceitando conexões.
 
 ## 👥 Equipe de Desenvolvimento
 - **Adriano Ferraz Guimarães**
-
 - **Filippo Salles Morais**
-
 - **Mário Márcio Holsbach**
-
+- **Matheus Marmo Sorio**
 - **Ricardo Vasconcellos Drumond**
 
-## 📄 Link do video tutorial:
+## 📄 Link do video tutorial
 https://youtu.be/az7zzplQha8
